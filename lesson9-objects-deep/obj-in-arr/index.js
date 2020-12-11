@@ -17,24 +17,6 @@ const rooms = {
   ],
 };
 
-
-// function getPeople(obj) {
-//   const arrProperties = [];
-//   if ( Object.keys(obj).length === 0 ) {
-//     return arrProperties
-//   }
-//   const objProperties = Object.entries(obj)
-//     .map(name => name[1])
-//     .reduce((acc, elem) => acc.concat(elem));
-  
-//   for ( const key in objProperties ) {
-//     arrProperties.push(objProperties[key].name);
-//   }
-
-//   return arrProperties;
-// }
-
-
 const getPeople = obj => Object.entries(obj)
       .map(item => item[1]).flat()
       .map(item => Object.values(item)).flat();
