@@ -23,6 +23,9 @@
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.22.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.10"
+  },
   "description": ""
 }
