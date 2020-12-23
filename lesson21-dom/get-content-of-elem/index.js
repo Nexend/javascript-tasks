@@ -14,7 +14,3 @@ export function getGoal() {
   const goalElem = document.querySelector('.goal');
   return goalElem.outerHTML;
 }
-getTitle();
-getDescription();
-getPlans();
-getGoal();
