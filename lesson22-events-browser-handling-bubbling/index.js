@@ -23,6 +23,22 @@ const logGreyDiv = logTarget.bind(null, 'DIV', 'grey');
 const logGreyP = logTarget.bind(null, 'P', 'grey');
 const logGreySpan = logTarget.bind(null, 'SPAN', 'grey');
 
+divElem.addEventListener('click', logGreyDiv, true);
+pElem.addEventListener('click', logGreyP, true);
+spanElem.addEventListener('click', logGreySpan, true);
+
+divElem.addEventListener('click', logGreenDiv);
+pElem.addEventListener('click', logGreenP);
+spanElem.addEventListener('click', logGreenSpan);
+
+divElem.removeEventListener('click', logGreyDiv, true);
+pElem.removeEventListener('click', logGreyP, true);
+spanElem.removeEventListener('click', logGreySpan, true);
+
+divElem.removeEventListener('click', logGreenDiv);
+pElem.removeEventListener('click', logGreenP);
+spanElem.removeEventListener('click', logGreenSpan);
+
 const addEvents = document.querySelector('.attach-handlers-btn');
 function addAllEvents() {
   logGreenDiv();
