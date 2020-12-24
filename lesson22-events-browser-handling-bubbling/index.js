@@ -24,6 +24,15 @@ function clearField() {
 clearButton.addEventListener('click', clearField);
 
 const attachHandlers = document.querySelector('.attach-handlers-btn');
+
+divElem.addEventListener('click', logGreyDiv, true);
+pElem.addEventListener('click', logGreyP, true);
+spanElem.addEventListener('click', logGreySpan, true);
+
+spanElem.addEventListener('click', logGreenSpan);
+pElem.addEventListener('click', logGreenP);
+divElem.addEventListener('click', logGreenDiv);
+
 const addEvents = () => {
   divElem.addEventListener('click', logGreyDiv, true);
   pElem.addEventListener('click', logGreyP, true);
