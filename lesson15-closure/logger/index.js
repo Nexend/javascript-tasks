@@ -1,33 +1,30 @@
+// good
 function createLogger() {
-  const logger = [];
+  const messages = [];
   function warn(text) {
-    logger.push({
+    messages.push({
       message: text,
       dateTime: new Date(),
-      type: "warn",
+      type: 'warn',
     });
   }
   function error(text) {
-    logger.push({
+    messages.push({
       message: text,
       dateTime: new Date(),
-      type: "error",
+      type: 'error',
     });
   }
   function log(text) {
-    logger.push({
+    messages.push({
       message: text,
       dateTime: new Date(),
-      type: "log",
+      type: 'log',
     });
   }
   function getRecords(type) {
-    if (type === undefined) {
-      return logger.sort((a, b) => b.dateTime - a.dateTime);
-    }
-    return logger
-      .filter((item) => item.type === type)
-      .sort((a, b) => b.dateTime - a.dateTime);
+    const sorted = messages.sort((a, b) => a.dateTime < b.dateTime);
+    return type ? sorted.filter(item => item.type === type) : sorted;
   }
   return {
     warn,
@@ -36,6 +33,47 @@ function createLogger() {
     getRecords,
   };
 }
+
+
+// not good (2 sort, 2 return, type === undefined)
+// function createLogger() {
+//   const logger = [];
+//   function warn(text) {
+//     logger.push({
+//       message: text,
+//       dateTime: new Date(),
+//       type: "warn",
+//     });
+//   }
+//   function error(text) {
+//     logger.push({
+//       message: text,
+//       dateTime: new Date(),
+//       type: "error",
+//     });
+//   }
+//   function log(text) {
+//     logger.push({
+//       message: text,
+//       dateTime: new Date(),
+//       type: "log",
+//     });
+//   }
+//   function getRecords(type) {
+//     if (type === undefined) {
+//       return logger.sort((a, b) => b.dateTime - a.dateTime);
+//     }
+//     return logger
+//       .filter((item) => item.type === type)
+//       .sort((a, b) => b.dateTime - a.dateTime);
+//   }
+//   return {
+//     warn,
+//     error,
+//     log,
+//     getRecords,
+//   };
+// }
 const logger = createLogger();
 logger.log("User logged in");
 logger.warn("User try to restricted page");
