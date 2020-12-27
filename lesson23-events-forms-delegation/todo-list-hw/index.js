@@ -64,27 +64,25 @@ createBtn.addEventListener('click', addTask);
 const listElem = document.querySelector('.list');
 
 function checkboxStatus(event) {
-  event.target.classList.toggle('list__item_done');
-  if (event.target.classList.contains('list__item_done')) {
-    event.target.children[0].checked = true;
+  const checkboxElem = document.querySelector(`input[data-id="${event.target.dataset.id}"]`);
+  if (checkboxElem.checked) {
+    checkboxElem.parentElement.classList.add('list__item_done');
 
     tasks.forEach(el => {
-      if (el.text === event.target.textContent) {
+      if (el.text === checkboxElem.parentElement.textContent) {
         el.done = true;
       }
     });
-    updatedTasks();
   } else {
-    event.target.children[0].checked = false;
+    checkboxElem.parentElement.classList.remove('list__item_done');
 
     tasks.forEach(el => {
-      if (el.text === event.target.textContent) {
+      if (el.text === checkboxElem.parentElement.textContent) {
         el.done = false;
       }
-      updatedTasks();
     });
   }
-  console.log(tasks);
+  updatedTasks();
 }
 
 listElem.addEventListener('click', checkboxStatus);
