@@ -21,14 +21,14 @@ const renderListItems = listItems => {
       checkboxElem.setAttribute('type', 'checkbox');
       checkboxElem.dataset.id = `${index}`;
       checkboxElem.checked = done;
+      checkboxElem.classList.add('list-item-checkbox');
 
       if (done) {
         listItemElem.classList.add('list__item_done');
       }
 
-      checkboxElem.classList.add('list-item-checkbox');
-
       listItemElem.append(checkboxElem, text);
+
       return listItemElem;
     });
 
@@ -61,28 +61,30 @@ const addTask = () => {
 const createBtn = document.querySelector('.create-task-btn');
 createBtn.addEventListener('click', addTask);
 
-function checkboxStatus(event) {
-  const checkboxElem = document.querySelector(`[data-id="${this.dataset.id}"]`);
+const listElem = document.querySelector('.list');
 
-  if (checkboxElem.checked) {
-    checkboxElem.parentElement.classList.add('list__item_done');
+function checkboxStatus(event) {
+  event.target.classList.toggle('list__item_done');
+  if (event.target.classList.contains('list__item_done')) {
+    event.target.children[0].checked = true;
 
     tasks.forEach(el => {
-      if (el.text === checkboxElem.parentElement.textContent) {
+      if (el.text === event.target.textContent) {
         el.done = true;
       }
     });
+    updatedTasks();
   } else {
-    checkboxElem.parentElement.classList.remove('list__item_done');
+    event.target.children[0].checked = false;
 
     tasks.forEach(el => {
-      if (el.text === checkboxElem.parentElement.textContent) {
+      if (el.text === event.target.textContent) {
         el.done = false;
       }
+      updatedTasks();
     });
   }
-  updatedTasks();
+  console.log(tasks);
 }
 
-const checkboxBtn = document.querySelectorAll('.list-item-checkbox');
-checkboxBtn.forEach(el => el.addEventListener('click', checkboxStatus));
+listElem.addEventListener('click', checkboxStatus);
