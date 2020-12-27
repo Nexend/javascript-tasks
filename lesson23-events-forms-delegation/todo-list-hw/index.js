@@ -61,9 +61,11 @@ const addTask = () => {
 const createBtn = document.querySelector('.create-task-btn');
 createBtn.addEventListener('click', addTask);
 
-const listElem = document.querySelector('.list');
+const checkboxStatus = event => {
+  if (!event.target.classList.contains('list-item-checkbox')) {
+    return;
+  }
 
-function checkboxStatus(event) {
   const checkboxElem = document.querySelector(`input[data-id="${event.target.dataset.id}"]`);
   if (checkboxElem.checked) {
     checkboxElem.parentElement.classList.add('list__item_done');
@@ -83,6 +85,6 @@ function checkboxStatus(event) {
     });
   }
   updatedTasks();
-}
+};
 
-listElem.addEventListener('click', checkboxStatus);
+document.querySelector('.list').addEventListener('click', checkboxStatus);
