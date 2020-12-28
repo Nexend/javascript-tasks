@@ -69,20 +69,22 @@ const checkboxStatus = event => {
   const checkboxElem = document.querySelector(`input[data-id="${event.target.dataset.id}"]`);
 
   if (checkboxElem.checked) {
-    tasks.forEach(el => {
+    [...tasks].map(el => {
       if (el.text === checkboxElem.parentElement.textContent) {
         el.done = true;
       }
+      return el.done;
     });
+    updatedTasks();
   } else {
-    tasks.forEach(el => {
+    [...tasks].map(el => {
       if (el.text === checkboxElem.parentElement.textContent) {
         el.done = false;
       }
+      return el.done;
     });
+    updatedTasks();
   }
-  updatedTasks();
-  console.log(tasks);
 };
 
 document.querySelector('.list').addEventListener('click', checkboxStatus);
