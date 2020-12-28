@@ -7,10 +7,9 @@ const tasks = [
   { text: 'Visit doctor', done: true },
   { text: 'Buy meat', done: true },
 ];
+const listElem = document.querySelector('.list');
 
 const renderListItems = listItems => {
-  const listElem = document.querySelector('.list');
-
   const listItemsElems = listItems
     .sort((a, b) => a.done - b.done)
     .map((el, index) => {
@@ -19,7 +18,7 @@ const renderListItems = listItems => {
 
       const checkboxElem = document.createElement('input');
       checkboxElem.setAttribute('type', 'checkbox');
-      checkboxElem.dataset.id = `${index}`;
+      checkboxElem.setAttribute('data-id', index);
       checkboxElem.checked = el.done;
       checkboxElem.classList.add('list-item-checkbox');
 
@@ -37,12 +36,6 @@ const renderListItems = listItems => {
 
 renderListItems(tasks);
 
-const updatedTasks = () => {
-  const listItemElems = document.querySelectorAll('.list__item');
-  listItemElems.forEach(el => el.remove());
-  renderListItems(tasks);
-};
-
 const addTask = () => {
   const inputEl = document.querySelector('.task-input');
 
@@ -54,7 +47,8 @@ const addTask = () => {
   if (inputEl.value) {
     tasks.push(task);
     inputEl.value = '';
-    updatedTasks();
+    listElem.innerHTML = '';
+    renderListItems(tasks);
   }
 };
 
@@ -65,23 +59,11 @@ const checkboxStatus = event => {
   if (!event.target.classList.contains('list-item-checkbox')) {
     return;
   }
-
-  const checkboxElem = document.querySelector(`input[data-id="${event.target.dataset.id}"]`);
-
-  if (checkboxElem.checked) {
-    tasks.forEach(el => {
-      if (el.text === checkboxElem.parentElement.textContent) {
-        el.done = true;
-      }
-    });
-  } else {
-    tasks.forEach(el => {
-      if (el.text === checkboxElem.parentElement.textContent) {
-        el.done = false;
-      }
-    });
-  }
-  updatedTasks();
+  const { id } = event.target.dataset;
+  const isChecked = event.target.checked;
+  tasks[id].done = isChecked;
+  listElem.innerHTML = '';
+  renderListItems(tasks);
 };
 
-document.querySelector('.list').addEventListener('click', checkboxStatus);
+listElem.addEventListener('click', checkboxStatus);
