@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-plusplus */
 const tasks = [
   { text: 'Buy milk', done: false },
   { text: 'Pick up Tom from airport', done: false },
@@ -7,26 +5,26 @@ const tasks = [
   { text: 'Visit doctor', done: true },
   { text: 'Buy meat', done: true },
 ];
+
 const listElem = document.querySelector('.list');
 
 const renderListItems = listItems => {
   const listItemsElems = listItems
     .sort((a, b) => a.done - b.done)
-    .map((el, index) => {
+    .map(({ text, done }, index) => {
       const listItemElem = document.createElement('li');
       listItemElem.classList.add('list__item');
 
       const checkboxElem = document.createElement('input');
       checkboxElem.setAttribute('type', 'checkbox');
       checkboxElem.setAttribute('data-id', index);
-      checkboxElem.checked = el.done;
-      checkboxElem.classList.add('list-item-checkbox');
+      checkboxElem.checked = done;
+      checkboxElem.classList.add('list__item-checkbox');
+      listItemElem.append(checkboxElem, text);
 
-      if (el.done) {
+      if (done) {
         listItemElem.classList.add('list__item_done');
       }
-
-      listItemElem.append(checkboxElem, el.text);
 
       return listItemElem;
     });
@@ -43,7 +41,6 @@ const addTask = () => {
     text: inputEl.value,
     done: false,
   };
-
   if (inputEl.value) {
     tasks.push(task);
     inputEl.value = '';
@@ -56,14 +53,13 @@ const createBtn = document.querySelector('.create-task-btn');
 createBtn.addEventListener('click', addTask);
 
 const checkboxStatus = event => {
-  if (!event.target.classList.contains('list-item-checkbox')) {
-    return;
-  }
-  const { id } = event.target.dataset;
-  const isChecked = event.target.checked;
-  tasks[id].done = isChecked;
-  listElem.innerHTML = '';
-  renderListItems(tasks);
-};
+  if (event.target.className === 'list__item-checkbox') {
+    const { id } = event.target.dataset;
+    const isChecked = event.target.checked;
 
+    tasks[id].done = isChecked;
+    listElem.innerHTML = '';
+    renderListItems(tasks);
+  }
+};
 listElem.addEventListener('click', checkboxStatus);
