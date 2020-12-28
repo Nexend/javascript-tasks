@@ -1,4 +1,3 @@
-/* eslint-disable no-return-assign */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
 const tasks = [
@@ -32,6 +31,7 @@ const renderListItems = listItems => {
 
       return listItemElem;
     });
+
   listElem.append(...listItemsElems);
 };
 
@@ -69,13 +69,17 @@ const checkboxStatus = event => {
   const checkboxElem = document.querySelector(`input[data-id="${event.target.dataset.id}"]`);
 
   if (checkboxElem.checked) {
-    tasks.map(el =>
-      el.text === checkboxElem.parentElement.textContent ? (el.done = true) : el.done,
-    );
+    tasks.forEach(el => {
+      if (el.text === checkboxElem.parentElement.textContent) {
+        el.done = true;
+      }
+    });
   } else {
-    tasks.map(el =>
-      el.text === checkboxElem.parentElement.textContent ? (el.done = false) : el.done,
-    );
+    tasks.forEach(el => {
+      if (el.text === checkboxElem.parentElement.textContent) {
+        el.done = false;
+      }
+    });
   }
   updatedTasks();
 };
