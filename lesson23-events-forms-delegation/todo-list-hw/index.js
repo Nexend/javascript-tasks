@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
 const tasks = [
@@ -31,7 +32,6 @@ const renderListItems = listItems => {
 
       return listItemElem;
     });
-
   listElem.append(...listItemsElems);
 };
 
@@ -69,22 +69,15 @@ const checkboxStatus = event => {
   const checkboxElem = document.querySelector(`input[data-id="${event.target.dataset.id}"]`);
 
   if (checkboxElem.checked) {
-    [...tasks].map(el => {
-      if (el.text === checkboxElem.parentElement.textContent) {
-        el.done = true;
-      }
-      return el.done;
-    });
-    updatedTasks();
+    tasks.map(el =>
+      el.text === checkboxElem.parentElement.textContent ? (el.done = true) : el.done,
+    );
   } else {
-    [...tasks].map(el => {
-      if (el.text === checkboxElem.parentElement.textContent) {
-        el.done = false;
-      }
-      return el.done;
-    });
-    updatedTasks();
+    tasks.map(el =>
+      el.text === checkboxElem.parentElement.textContent ? (el.done = false) : el.done,
+    );
   }
+  updatedTasks();
 };
 
 document.querySelector('.list').addEventListener('click', checkboxStatus);
