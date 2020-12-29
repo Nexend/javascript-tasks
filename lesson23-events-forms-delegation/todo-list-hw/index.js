@@ -53,13 +53,11 @@ const createBtn = document.querySelector('.create-task-btn');
 createBtn.addEventListener('click', addTask);
 
 const checkboxStatus = event => {
-  if (event.target.className === 'list__item-checkbox') {
-    const { id } = event.target.dataset;
-    const isChecked = event.target.checked;
-
-    tasks[id].done = isChecked;
-    listElem.innerHTML = '';
-    renderListItems(tasks);
+  if (event.target.className !== 'list__item-checkbox') {
+    return;
   }
+  tasks[event.target.dataset.id].done = event.target.checked;
+  listElem.innerHTML = '';
+  renderListItems(tasks);
 };
 listElem.addEventListener('click', checkboxStatus);
