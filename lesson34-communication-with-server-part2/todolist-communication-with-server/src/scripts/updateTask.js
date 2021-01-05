@@ -2,11 +2,12 @@ import { renderListItems } from './renderer.js';
 import { getItem, setItem } from './storage.js';
 import { getTasksList, updateTask, deleteTask } from './tasksGateway.js';
 
-export const onToggleTask = event => {
-  if (event.target.className !== 'list-item__checkbox') {
+export const onItemClick = event => {
+  if (event.target.className === 'list-item') {
     return;
   }
-  const taskId = event.target.dataset.id;
+
+  const taskId = event.target.closest('.list-item').dataset.id;
   const tasksList = getItem('tasksList');
   const { text } = tasksList.find(task => task.id === taskId);
   const done = event.target.checked;
@@ -22,20 +23,15 @@ export const onToggleTask = event => {
       setItem('tasksList', newTasksList);
       renderListItems();
     });
-};
 
-export const onDeleteTask = event => {
-  if (event.target.className !== 'list-item__delete-btn') {
-    return;
+  if (event.target.className === 'list-item__delete-btn') {
+    deleteTask(taskId)
+      .then(() => getTasksList())
+      .then(newTasksList => {
+        setItem('tasksList', newTasksList);
+        renderListItems();
+      });
   }
-  const taskId = event.target.closest('.list-item').dataset.id;
-
-  deleteTask(taskId)
-    .then(() => getTasksList())
-    .then(newTasksList => {
-      setItem('tasksList', newTasksList);
-      renderListItems();
-    });
 };
 
 // 1. Prepare data
