@@ -1,4 +1,4 @@
-export const addImage = (imgSrc, callback) => {
+const addImage = (imgSrc, callback) => {
   const imgElem = document.createElement('img');
   imgElem.setAttribute('alt', 'My Photo');
   imgElem.src = imgSrc;
@@ -30,4 +30,7 @@ const onImageLoaded = (error, imgElem) => {
 const imgSrc =
   'https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg';
 
-addImage(imgSrc, onImageLoaded);
+addImage(
+  'https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg',
+  onImageLoaded,
+);
